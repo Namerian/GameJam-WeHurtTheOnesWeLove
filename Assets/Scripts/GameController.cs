@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,11 +34,6 @@ public class GameController : GameScript
     // Update is called once per frame
     void Update()
     {
-        if(_gameOver && Input.anyKeyDown)
-        {
-            ExitGame();
-        }
-
         if (!GamePaused && Input.GetKeyDown(KeyCode.Escape))
         {
             EventManager.Instance.SendOnGamePausedEvent();
@@ -52,6 +48,11 @@ public class GameController : GameScript
 
     public void PlayerDied()
     {
+        if (_gameOver)
+        {
+            return;
+        }
+
         EventManager.Instance.SendOnGamePausedEvent();
 
         SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
@@ -73,11 +74,11 @@ public class GameController : GameScript
 
     public void ExitGame()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
 			Application.Quit ();
-        #endif
+#endif
     }
 
     public void UnpauseGame()
@@ -85,6 +86,47 @@ public class GameController : GameScript
         SceneManager.UnloadSceneAsync("PauseMenuScene");
 
         EventManager.Instance.SendOnGameUnpausedEvent();
+    }
+
+    public void LoadMenu()
+    {
+        _gameOver = true;
+
+        try
+        {
+            SceneManager.UnloadSceneAsync("scene");
+        }
+        catch(Exception e)
+        {
+            Debug.Log("Could not unload mainScene: " + e);
+        }
+
+        try
+        {
+            SceneManager.UnloadSceneAsync("PauseMenuScene");
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Could not unload GameOverScene: " + e);
+        }
+
+        try
+        {
+            SceneManager.UnloadSceneAsync("GameOverScene");
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Could not unload GameOverScene: " + e);
+        }
+
+        try
+        {
+            SceneManager.LoadScene("MenuScene", LoadSceneMode.Additive);
+        }
+        catch(Exception e)
+        {
+
+        }
     }
 
     //====================================================================
