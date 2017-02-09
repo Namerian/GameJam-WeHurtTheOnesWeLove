@@ -121,7 +121,16 @@ public class GameController : GameScript
         }
         catch (Exception e)
         {
-            Debug.Log("Could not unload GameOverScene: " + e);
+            Debug.Log("Could not unload PauseMenuScene: " + e);
+        }
+
+        try
+        {
+            SceneManager.UnloadSceneAsync("VictoryScene");
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Could not unload VictoryScene: " + e);
         }
 
         try
@@ -150,5 +159,6 @@ public class GameController : GameScript
     private void SendGameStartedEvent()
     {
         EventManager.Instance.SendOnGameStartedEvent();
+        _gameOver = false;
     }
 }
