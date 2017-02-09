@@ -13,6 +13,8 @@ public class PlayerController : GameScript
     [SerializeField]
     private float _maxSpeed;
     [SerializeField]
+    private float _jumpHeight;
+    [SerializeField]
     private int _healthPoints;
 
     private Rigidbody2D _rigidbody;
@@ -83,7 +85,7 @@ public class PlayerController : GameScript
         }
         if (jumpButtonDown)
         {
-            velocity.y = _maxSpeed;
+            velocity.y = _jumpHeight;
             _rigidbody.velocity = velocity;
         }
 
@@ -144,8 +146,10 @@ public class PlayerController : GameScript
 
     protected override void OnGamePaused()
     {
-        base.OnGamePaused();
+     
 
+        base.OnGamePaused();
+        if(_rigidbody != null)
         _rigidbody.velocity = Vector2.zero;
     }
 }
