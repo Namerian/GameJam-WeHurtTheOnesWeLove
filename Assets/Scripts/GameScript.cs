@@ -24,7 +24,6 @@ public abstract class GameScript : MonoBehaviour
 
     protected virtual void OnGameStarted()
     {
-        Debug.Log("game started");
         GamePaused = false;
     }
 

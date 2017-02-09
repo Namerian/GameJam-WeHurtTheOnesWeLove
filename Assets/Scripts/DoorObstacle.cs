@@ -11,6 +11,11 @@ public class DoorObstacle : Obstacle
 
     private bool _moving = false;
 
+    void Awake()
+    {
+        Initialize();
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -29,7 +34,7 @@ public class DoorObstacle : Obstacle
     // Update is called once per frame
     void Update()
     {
-        if (_moving)
+        if (!GamePaused && _moving)
         {
             Vector3 position = this.transform.position;
 

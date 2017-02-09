@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class GameController : GameScript
 {
     public static GameController Instance { get; private set; }
+
+    private bool _gameOver = false;
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            Initialize();
         }
         else
         {
@@ -30,7 +33,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if(_gameOver && Input.anyKeyDown)
+        {
+            ExitGame();
+        }
+
+        if (!GamePaused && Input.GetKeyDown(KeyCode.Escape))
         {
             EventManager.Instance.SendOnGamePausedEvent();
 
@@ -38,12 +46,29 @@ public class GameController : MonoBehaviour
         }
     }
 
+    //====================================================================
+    //
+    //====================================================================
+
+    public void PlayerDied()
+    {
+        EventManager.Instance.SendOnGamePausedEvent();
+
+        SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
+
+        _gameOver = true;
+    }
+
+    //====================================================================
+    //
+    //====================================================================
+
     public void LauchGame()
     {
         SceneManager.UnloadSceneAsync("MenuScene");
         SceneManager.LoadScene("scene", LoadSceneMode.Additive);
 
-        Invoke("SendGameStartedEvent", 2f);
+        Invoke("SendGameStartedEvent", 0.3f);
     }
 
     public void ExitGame()
@@ -61,6 +86,10 @@ public class GameController : MonoBehaviour
 
         EventManager.Instance.SendOnGameUnpausedEvent();
     }
+
+    //====================================================================
+    //
+    //====================================================================
 
     private void SendGameStartedEvent()
     {

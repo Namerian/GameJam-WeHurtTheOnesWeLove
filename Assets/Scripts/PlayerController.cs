@@ -81,6 +81,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        GameController.Instance.PlayerDied();
+    }
+
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.CompareTag("Lever"))
