@@ -9,8 +9,8 @@ public class PauseMenuController : MonoBehaviour
         GameController.Instance.UnpauseGame();
     }
 
-    public void OnQuitGameButtonPressed()
+    public void OnExitGameButtonPressed()
     {
-        GameController.Instance.ExitGame();
+        GameController.Instance.LoadMenu();
     }
 }
