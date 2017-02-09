@@ -60,6 +60,20 @@ public class GameController : GameScript
         _gameOver = true;
     }
 
+    public void OnPlayersInVictoryZone()
+    {
+        if (_gameOver)
+        {
+            return;
+        }
+
+        EventManager.Instance.SendOnGamePausedEvent();
+
+        SceneManager.LoadScene("VictoryScene", LoadSceneMode.Additive);
+
+        _gameOver = true;
+    }
+
     //====================================================================
     //
     //====================================================================
