@@ -44,14 +44,14 @@ public class LeverController : MonoBehaviour
             _position = ELeverPosition.open;
             _renderer.sprite = _openSprite;
 
-            _obstacle.Activate();
+            _obstacle.Activate(this);
         }
         else if(_position == ELeverPosition.open)
         {
             _position = ELeverPosition.closed;
             _renderer.sprite = _closedSprite;
 
-            _obstacle.Activate();
+            _obstacle.Activate(this);
         }
     }
 }

@@ -60,7 +60,7 @@ public class DoorObstacle : Obstacle
         }
     }
 
-    public override void Activate()
+    public override void Activate(LeverController lever)
     {
         if (!_moving)
         {
