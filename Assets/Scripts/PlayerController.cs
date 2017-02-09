@@ -131,7 +131,11 @@ public class PlayerController : GameScript
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        _canJump = true;
+        if (coll.transform.CompareTag("Ground"))
+        {
+            _canJump = true;
+        }
+        
     }
 
     public void ApplyDamage(int dmg)
