@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : GameScript {
     [SerializeField]
     private float _speed;
 
 	// Use this for initialization
-	void Start () {
-        
+	void Awake () {
+        Initialize();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        this.transform.Translate(this.transform.right * _speed * Time.deltaTime);
+        if (!GamePaused)
+        {
+            this.transform.Translate(this.transform.right * _speed * Time.deltaTime);
+        }
 	}
 }
