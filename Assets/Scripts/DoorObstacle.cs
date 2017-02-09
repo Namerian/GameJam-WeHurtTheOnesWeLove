@@ -24,6 +24,7 @@ public class DoorObstacle : Obstacle
         {
             position.y = Constants.DOOR_LOW_Y_POS;
         }
+        this.transform.position = position;
     }
 
     // Update is called once per frame
